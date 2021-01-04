@@ -3,12 +3,17 @@ package com.example.vluchten.vluchtenservice.model;
 import com.sun.org.apache.xpath.internal.objects.XString;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
-
+@Document(collection = "vluchten")
 public class Vlucht {
     @Id
     private String id;
     private Integer luchthavenId;
     private String naam;
+
+
+
+    public Vlucht() {
+    }
 
     public Vlucht(Integer luchthavenId, String naam) {
         this.luchthavenId = luchthavenId;
@@ -39,6 +44,5 @@ public class Vlucht {
         this.naam = naam;
     }
 
-    public Vlucht() {
-    }
+
 }

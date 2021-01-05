@@ -8,9 +8,8 @@ import java.util.List;
 
 @Repository
 public interface VluchtRepository extends MongoRepository<Vlucht, String> {
-    List<Vlucht> findVluchtById(String id);
-    List<Vlucht> findVluchtByLuchthavenId(int id);
+    List<Vlucht> findVluchtByMaatschappijnaam(String maatschappijnaam);
     List<Vlucht> findVluchtenByNaam(String naam);
 
-    Vlucht findVluchtByLuchthavenIdAndNaam(Integer luchthavenId, String naam);
+    Vlucht findVluchtByMaatschappijnaamAndNaam(String maatschappijnaam, String naam);
 }

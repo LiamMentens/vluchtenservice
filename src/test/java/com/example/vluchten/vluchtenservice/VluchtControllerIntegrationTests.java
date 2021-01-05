@@ -28,10 +28,10 @@ public class VluchtControllerIntegrationTests {
     @Autowired
     private VluchtRepository vluchtRepository;
 
-    private Vlucht vlucht1 = new Vlucht(1,"antwerpen");
-    private Vlucht vlucht2 = new Vlucht(2,"brussel");
-    private Vlucht vlucht3 = new Vlucht(3,"zaventem");
-    private Vlucht vluchtToBeDeleted = new Vlucht(999,"Schiphol");
+    private Vlucht vlucht1 = new Vlucht("JetAir","antwerpen");
+    private Vlucht vlucht2 = new Vlucht("RyanAir","brussel");
+    private Vlucht vlucht3 = new Vlucht("FlightGroup","zaventem");
+    private Vlucht vluchtToBeDeleted = new Vlucht("Royal Air Antwerpen","Schiphol");
 
     @BeforeEach
     public void beforeAllTest(){
@@ -52,28 +52,21 @@ public class VluchtControllerIntegrationTests {
     @Test
     public void givenVlucht_whenGetVluchtByLuchthavenIdAndNaam_thenReturnJsonReview() throws Exception {
 
-        mockMvc.perform(get("/vluchten/luchthaven/{luchthavenId}/naam/{naam}", 1, "antwerpen"))
+        mockMvc.perform(get("/vluchten/maatschappij/{maatschappijnaam}/naam/{naam}", "JetAir", "antwerpen"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.luchthavenId", is(1)))
+                .andExpect(jsonPath("$.maatschappijnaam", is("JetAir")))
                 .andExpect(jsonPath("$.naam", is("antwerpen")));
     }
 
     @Test
     public void givenVlucht_whenGetVluchtByNaam_thenReturnJsonReviews() throws Exception {
 
-        List<Vlucht> vluchtList = new ArrayList<>();
-        vluchtList.add(vlucht1);
-        vluchtList.add(vlucht2);
-
-        mockMvc.perform(get("/vlucht/{naam}", "antwerpen"))
+        mockMvc.perform(get("/vluchten/naam/{naam}", "brussel"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].luchthavenId", is(1)))
-                .andExpect(jsonPath("$[0].naam", is("antwerpen")))
-                .andExpect(jsonPath("$[1].luchthavenId", is(2)))
-                .andExpect(jsonPath("$[1].naam", is("brussel")));
+                .andExpect(jsonPath("$[0].maatschappijnaam", is("RyanAir")))
+                .andExpect(jsonPath("$[0].naam", is("brussel")));
     }
 
 

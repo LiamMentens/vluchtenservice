@@ -14,14 +14,9 @@ public class VluchtController {
     @Autowired
     private VluchtRepository vluchtRepository;
 
-//    @GetMapping("/vluchten/{Id}")
-//    public List<Vlucht> getVluchtById(@PathVariable String Id){
-//        return vluchtRepository.findVluchtById(Id);
-//    }
-
-    @GetMapping("/vluchten/luchthaven/{luchthavenId}")
-    public List<Vlucht> getVluchtByLuchthavenId(@PathVariable Integer luchthavenId){
-        return vluchtRepository.findVluchtByLuchthavenId(luchthavenId);
+    @GetMapping("/vluchten/maatschappij/{maatschappijnaam}")
+    public List<Vlucht> getVluchtByLuchthavenId(@PathVariable String maatschappijnaam){
+        return vluchtRepository.findVluchtByMaatschappijnaam(maatschappijnaam);
     }
 
     @GetMapping("/vluchten/naam/{naam}")
@@ -30,9 +25,9 @@ public class VluchtController {
     }
 
 
-    @GetMapping("/vluchten/luchthaven/{luchthavenId}/naam/{naam}")
-    public Vlucht getVluchtByLuchthavenIdAndNaam(@PathVariable Integer luchthavenId, @PathVariable String naam){
-        return vluchtRepository.findVluchtByLuchthavenIdAndNaam(luchthavenId, naam);
+    @GetMapping("/vluchten/maatschappij/{maatschappijnaam}/naam/{naam}")
+    public Vlucht getVluchtByMaatschappijAndNaam(@PathVariable String maatschappijnaam, @PathVariable String naam){
+        return vluchtRepository.findVluchtByMaatschappijnaamAndNaam(maatschappijnaam, naam);
     }
 
     @PostMapping("/vluchten")
@@ -41,10 +36,10 @@ public class VluchtController {
         return vlucht;
     }
 
-    //List bij zetten of meer parameters
+////    List bij zetten of meer parameters
 //    @PutMapping("/vluchten")
 //    public Vlucht updateVlucht(@RequestBody Vlucht updatedVlucht){
-//        Vlucht retrievedVlucht = vluchtRepository.findVluchtByLuchthavenIdAndNaam(updatedVlucht.getLuchthavenId(), updatedVlucht.getNaam());
+//        Vlucht retrievedVlucht = vluchtRepository.findVluchtByMaatschappijnaamAndNaam(updatedVlucht.getMaatschappijnaam(), updatedVlucht.getNaam());
 //
 //        retrievedVlucht.setNaam(updatedVlucht.getNaam());
 //
@@ -53,9 +48,9 @@ public class VluchtController {
 //        return retrievedVlucht;
 //    }
 
-    @DeleteMapping("/vluchten/luchthaven/{luchthavenId}/naam/{naam}")
-    public ResponseEntity deleteVlucht(@PathVariable Integer luchthavenId, @PathVariable String naam){
-        Vlucht vlucht = vluchtRepository.findVluchtByLuchthavenIdAndNaam(luchthavenId,naam);
+    @DeleteMapping("/vluchten/maatschappij/{maatschappijnaam}/naam/{naam}")
+    public ResponseEntity deleteVlucht(@PathVariable String maatschappijnaam, @PathVariable String naam){
+        Vlucht vlucht = vluchtRepository.findVluchtByMaatschappijnaamAndNaam(maatschappijnaam,naam);
         if(vlucht!=null){
             vluchtRepository.delete(vlucht);
             return ResponseEntity.ok().build();
@@ -67,7 +62,7 @@ public class VluchtController {
     @PostConstruct
     public void fillDB(){
         if(vluchtRepository.count()==0){
-            vluchtRepository.save(new Vlucht(1,"brussel"));
+            vluchtRepository.save(new Vlucht("zaventem","brussel"));
         }
     }
 }

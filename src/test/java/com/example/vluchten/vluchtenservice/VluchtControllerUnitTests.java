@@ -35,40 +35,40 @@ public class VluchtControllerUnitTests {
     private ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    public void givenVlucht_whenGetVluchtByLuchthavenIdAndNaam_thenReturnJsonVlucht() throws Exception {
-        Vlucht vlucht1 = new Vlucht(001,"kutnest");
+    public void givenVlucht_whenGetVluchtByMaatschappijnaamAndNaam_thenReturnJsonVlucht() throws Exception {
+        Vlucht vlucht1 = new Vlucht("ryanair","brussel");
 
-        given(vluchtRepository.findVluchtByLuchthavenIdAndNaam(001,"kutnest")).willReturn(vlucht1);
+        given(vluchtRepository.findVluchtByMaatschappijnaamAndNaam("ryanair","brussel")).willReturn(vlucht1);
 
-        mockMvc.perform(get("/vluchten/luchthaven/{luchthavenId}/naam/{naam}", 001,"kutnest"))
+        mockMvc.perform(get("/vluchten/maatschappij/{maatschappijnaam}/naam/{naam}", "ryanair","brussel"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.luchthavenId",is(001)))
-                .andExpect(jsonPath("$.naam",is("kutnest")));
+                .andExpect(jsonPath("$.maatschappijnaam",is("ryanair")))
+                .andExpect(jsonPath("$.naam",is("brussel")));
     }
 
     @Test
-    public void givenVlucht_whenGetVluchtByLuchthavenId() throws Exception {
-        Vlucht vlucht1 = new Vlucht(001,"zaventem");
-        Vlucht vlucht2 = new Vlucht(001,"schiphol");
+    public void givenVlucht_whenGetVluchtByMaatschappijnaam() throws Exception {
+        Vlucht vlucht1 = new Vlucht("jetair","zaventem");
+        Vlucht vlucht2 = new Vlucht("jetair","schiphol");
         List<Vlucht> vluchtenList = new ArrayList<>();
         vluchtenList.add(vlucht1);
         vluchtenList.add(vlucht2);
 
-        given(vluchtRepository.findVluchtByLuchthavenId(001)).willReturn(vluchtenList);
+        given(vluchtRepository.findVluchtByMaatschappijnaam("jetair")).willReturn(vluchtenList);
 
-        mockMvc.perform(get("/vluchten/luchthaven/{luchthavenId}", 001))
+        mockMvc.perform(get("/vluchten/maatschappij/{maatschappijnaam}", "jetair"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].luchthavenId",is(001)))
-                .andExpect(jsonPath("$[1].luchthavenId",is(001)));
+                .andExpect(jsonPath("$[0].maatschappijnaam",is("jetair")))
+                .andExpect(jsonPath("$[1].maatschappijnaam",is("jetair")));
     }
 
 
     @Test
     public void givenVlucht_whenGetVluchtbyNaam_thenReturnJsonVlucht() throws  Exception {
-        Vlucht vlucht = new Vlucht(001,"antwerpen");
-        Vlucht vlucht2 = new Vlucht(002,"schiphol");
+        Vlucht vlucht = new Vlucht("FlyingGroup","antwerpen");
+        Vlucht vlucht2 = new Vlucht("FlyingGroup","schiphol");
         List<Vlucht> vluchtenList = new ArrayList<>();
         vluchtenList.add(vlucht);
         vluchtenList.add(vlucht2);
@@ -85,14 +85,14 @@ public class VluchtControllerUnitTests {
 
     @Test
     public void whenPostVlucht_thenReturnJsonVlucht() throws Exception{
-        Vlucht vlucht = new Vlucht(004, "schiphol");
+        Vlucht vlucht = new Vlucht("FlyingGroup", "schiphol");
 
         mockMvc.perform(post("/vluchten")
                 .content(mapper.writeValueAsString(vlucht))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.luchthavenId",is(004)))
+                .andExpect(jsonPath("$.maatschappijnaam",is("FlyingGroup")))
                 .andExpect(jsonPath("$.naam",is("schiphol")));
 
     }
@@ -117,11 +117,11 @@ public class VluchtControllerUnitTests {
 
     @Test
     public void givenVlucht_whenDeleteVlucht_thenStatusOk() throws Exception{
-        Vlucht vluchtToBeDeleted = new Vlucht(999,"york");
+        Vlucht vluchtToBeDeleted = new Vlucht("JetAir","york");
 
-        given(vluchtRepository.findVluchtByLuchthavenIdAndNaam(999,"york")).willReturn(vluchtToBeDeleted);
+        given(vluchtRepository.findVluchtByMaatschappijnaamAndNaam("JetAir","york")).willReturn(vluchtToBeDeleted);
 
-        mockMvc.perform(delete("/vluchten/luchthaven/{luchthavenId}/naam/{naam}",999, "york")
+        mockMvc.perform(delete("/vluchten/maatschappij/{maatschappijnaam}/naam/{naam}","JetAir", "york")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -129,9 +129,9 @@ public class VluchtControllerUnitTests {
     @Test
     public void givenNoVlucht_whenDeleteVlucht_thenStatusNotFound() throws Exception{
 
-        given(vluchtRepository.findVluchtByLuchthavenIdAndNaam(564,"york")).willReturn(null);
+        given(vluchtRepository.findVluchtByMaatschappijnaamAndNaam("JetAir","york")).willReturn(null);
 
-        mockMvc.perform(delete("/vluchten/luchthaven/{luchthavenId}/naam/{naam}",564, "york")
+        mockMvc.perform(delete("/vluchten/maatschappij/{maatschappijnaam}/naam/{naam}","JetAir", "york")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

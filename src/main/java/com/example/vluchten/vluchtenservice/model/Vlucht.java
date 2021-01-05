@@ -7,16 +7,14 @@ import org.springframework.data.annotation.Id;
 public class Vlucht {
     @Id
     private String id;
-    private Integer luchthavenId;
+    private String maatschappijnaam;
     private String naam;
-
-
 
     public Vlucht() {
     }
 
-    public Vlucht(Integer luchthavenId, String naam) {
-        this.luchthavenId = luchthavenId;
+    public Vlucht(String maatschappijnaam, String naam) {
+        this.maatschappijnaam = maatschappijnaam;
         this.naam = naam;
     }
 
@@ -28,14 +26,6 @@ public class Vlucht {
         this.id = id;
     }
 
-    public Integer getLuchthavenId() {
-        return luchthavenId;
-    }
-
-    public void setLuchthavenId(Integer luchthavenId) {
-        this.luchthavenId = luchthavenId;
-    }
-
     public String getNaam() {
         return naam;
     }
@@ -44,5 +34,11 @@ public class Vlucht {
         this.naam = naam;
     }
 
+    public String getMaatschappijnaam() {
+        return maatschappijnaam;
+    }
 
+    public void setMaatschappijnaam(String maatschappijnaam) {
+        this.maatschappijnaam = maatschappijnaam;
+    }
 }

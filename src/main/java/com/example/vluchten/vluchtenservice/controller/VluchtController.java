@@ -36,17 +36,7 @@ public class VluchtController {
         return vlucht;
     }
 
-////    List bij zetten of meer parameters
-//    @PutMapping("/vluchten")
-//    public Vlucht updateVlucht(@RequestBody Vlucht updatedVlucht){
-//        Vlucht retrievedVlucht = vluchtRepository.findVluchtByMaatschappijnaamAndNaam(updatedVlucht.getMaatschappijnaam(), updatedVlucht.getNaam());
-//
-//        retrievedVlucht.setNaam(updatedVlucht.getNaam());
-//
-//        vluchtRepository.save(retrievedVlucht);
-//
-//        return retrievedVlucht;
-//    }
+
 
     @DeleteMapping("/vluchten/maatschappij/{maatschappijnaam}/naam/{naam}")
     public ResponseEntity deleteVlucht(@PathVariable String maatschappijnaam, @PathVariable String naam){

@@ -1,6 +1,6 @@
 package com.example.vluchten.vluchtenservice.model;
 
-import com.sun.org.apache.xpath.internal.objects.XString;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 @Document(collection = "vluchten")

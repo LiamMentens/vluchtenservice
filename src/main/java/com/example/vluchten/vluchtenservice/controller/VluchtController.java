@@ -62,7 +62,7 @@ public class VluchtController {
     @PostConstruct
     public void fillDB(){
         if(vluchtRepository.count()==0){
-            vluchtRepository.save(new Vlucht("zaventem","brussel"));
+            vluchtRepository.save(new Vlucht("jetair","brussel"));
         }
     }
 }

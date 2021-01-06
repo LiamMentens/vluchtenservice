@@ -51,8 +51,12 @@ public class VluchtController {
 
     @PostConstruct
     public void fillDB(){
+        vluchtRepository.deleteAll();
         if(vluchtRepository.count()==0){
             vluchtRepository.save(new Vlucht("jetair","brussel"));
+            vluchtRepository.save(new Vlucht("qatar","amsterdam"));
+            vluchtRepository.save(new Vlucht("Ryanaire","schiphol"));
+            vluchtRepository.save(new Vlucht("Brussels Airlines","moskou"));
         }
     }
 }

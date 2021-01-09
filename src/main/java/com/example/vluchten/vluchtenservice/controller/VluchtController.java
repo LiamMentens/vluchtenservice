@@ -53,10 +53,10 @@ public class VluchtController {
     public void fillDB(){
         vluchtRepository.deleteAll();
         if(vluchtRepository.count()==0){
-            vluchtRepository.save(new Vlucht("jetair","brussel"));
-            vluchtRepository.save(new Vlucht("qatar","amsterdam"));
-            vluchtRepository.save(new Vlucht("Ryanaire","schiphol"));
-            vluchtRepository.save(new Vlucht("Brussels Airlines","moskou"));
+            vluchtRepository.save(new Vlucht("jetair","BRU-CDG"));
+            vluchtRepository.save(new Vlucht("qatar","BRU-ALX"));
+            vluchtRepository.save(new Vlucht("Ryanaire","DEL-JFK"));
+            vluchtRepository.save(new Vlucht("Brussels Airlines","BRU-PEK"));
         }
     }
 }
